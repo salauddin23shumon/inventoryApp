@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/nav_start_splash">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.sss.myinventoryapp.ui.home.HomeFragment"
+        android:label="@string/menu_home"
+        tools:layout="@layout/fragment_home" >
+
+        <action
+            android:id="@+id/action_nav_home_to_productAddFragment"
+            app:destination="@id/productAddFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_gallery"
+        android:name="com.sss.myinventoryapp.ui.gallery.GalleryFragment"
+        android:label="@string/menu_gallery"
+        tools:layout="@layout/fragment_gallery" >
+        <action
+            android:id="@+id/action_nav_gallery_to_transactionAddFragment"
+            app:destination="@id/transactionAddFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_slideshow"
+        android:name="com.sss.myinventoryapp.ui.slideshow.SlideshowFragment"
+        android:label="@string/menu_slideshow"
+        tools:layout="@layout/fragment_slideshow" />
+
+    <fragment
+        android:id="@+id/nav_signin"
+        android:name="com.sss.myinventoryapp.fragments.SignInFragment"
+        android:label="fragment_sign_in"
+        tools:layout="@layout/fragment_sign_in" >
+        <action
+            android:id="@+id/action_signInFragment_to_signUpFragment"
+            app:popUpTo="@id/nav_signin"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_signup" />
+        <action
+            android:id="@+id/action_signInFragment_to_welcomeSplashFragment"
+            app:popUpTo="@id/nav_signin"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_welcome_splash" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_start_splash"
+        android:name="com.sss.myinventoryapp.fragments.StartSplashFragment"
+        android:label="fragment_start_splash"
+        tools:layout="@layout/fragment_start_splash" >
+        <action
+            android:id="@+id/action_startSplashFragment_to_nav_home"
+            app:popUpTo="@id/nav_start_splash"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_home" />
+        <action
+            android:id="@+id/action_startSplashFragment_to_signInFragment"
+            app:popUpTo="@id/nav_start_splash"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_signin" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_signup"
+        android:name="com.sss.myinventoryapp.fragments.SignUpFragment"
+        android:label="fragment_sign_up"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_signUpFragment_to_signInFragment"
+            app:popUpTo="@id/nav_signup"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_signin" />
+        <action
+            android:id="@+id/action_signUpFragment_to_welcomeSplashFragment"
+            app:popUpTo="@id/nav_signup"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_welcome_splash" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_welcome_splash"
+        android:name="com.sss.myinventoryapp.fragments.WelcomeSplashFragment"
+        android:label="fragment_welcome_splash"
+        tools:layout="@layout/fragment_welcome_splash" >
+        <action
+            android:id="@+id/action_welcomeSplashFragment_to_nav_home"
+            app:popUpTo="@id/nav_welcome_splash"
+            app:popUpToInclusive="true"
+            app:destination="@id/nav_home" />
+    </fragment>
+
+    <action
+        android:id="@+id/action_global_nav_signin"
+        app:destination="@id/nav_signin"
+        app:popUpTo="@+id/nav_graph"
+        app:launchSingleTop="true"/>
+    <fragment
+        android:id="@+id/productAddFragment"
+        android:name="com.sss.myinventoryapp.fragments.ProductAddFragment"
+        android:label="fragment_product_add"
+        tools:layout="@layout/fragment_product_add" />
+    <fragment
+        android:id="@+id/transactionAddFragment"
+        android:name="com.sss.myinventoryapp.fragments.TransactionAddFragment"
+        android:label="TransactionAddFragment" />
+</navigation>

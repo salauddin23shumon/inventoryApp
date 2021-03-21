@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragments.ProductAddFragment"
+    android:layout_marginTop="80dp">
+
+    <EditText
+        android:id="@+id/nameET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="name"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/quantityET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="quantity"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/unitET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="unit"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/rateET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="rate"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/priceET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="price"
+        android:inputType="text" />
+
+    <EditText
+        android:id="@+id/dateET"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="date"
+        android:inputType="text" />
+
+    <Button
+        android:id="@+id/saveBtn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="save" />
+
+
+</LinearLayout>

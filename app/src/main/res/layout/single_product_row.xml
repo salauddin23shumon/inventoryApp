@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="7dp"
+    android:layout_marginStart="4dp"
+    android:layout_marginEnd="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/p_img"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_launcher"
+            android:padding="4dp"
+            android:adjustViewBounds="true"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="2.5"
+            android:background="#FAF6F6"
+            android:padding="5dp">
+
+            <TextView
+                android:id="@+id/p_nameTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:maxLines="1"
+                android:text="pepsi"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+            <TextView
+                android:id="@+id/unitTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18sp"
+                android:text="Unit: 1ltr"/>
+
+                <TextView
+                    android:id="@+id/rateTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/unitTV"
+                    android:text="Rate: 45000.00"
+                    android:layout_marginStart="50dp"/>
+
+            <TextView
+                android:id="@+id/quantityTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/unitTV"
+                android:textSize="18sp"
+                android:text="Quantity: 25"
+                android:textColor="@color/blue"/>
+
+
+
+                <TextView
+                    android:id="@+id/stockTV"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="18sp"
+                    android:layout_toEndOf="@id/rateTV"
+                    android:layout_alignStart="@id/rateTV"
+                    android:layout_below="@id/rateTV"
+                    android:text="Stock: 25"
+                    android:textColor="@color/dark_green"/>
+            </RelativeLayout>
+
+
+
+            <TextView
+                android:id="@+id/priceTV"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:text="price: 50"/>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View android:id="@+id/strut"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_centerHorizontal="true"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnIn"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_alignRight="@id/strut"
+                    android:layout_alignParentLeft="true"
+                    android:layout_margin="5dp"
+                    android:text="IN"
+                    android:textSize="14sp"
+                    android:backgroundTint="@color/dark_orange"/>
+
+                <Button
+                    android:id="@+id/btnOut"
+                    android:layout_width="0dp"
+                    android:layout_height="38dp"
+                    android:layout_alignLeft="@id/strut"
+                    android:layout_alignParentRight="true"
+                    android:text="OUT"
+                    android:textSize="14sp"
+                    android:layout_margin="5dp"
+                    android:backgroundTint="@color/hard_green"/>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
