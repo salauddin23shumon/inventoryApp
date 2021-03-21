@@ -123,7 +123,6 @@ public class SignUpFragment extends Fragment {
                 btnSignup.setVisibility(View.GONE);
                 if (mAwesomeValidation.validate()) {
                     signUpViewModel.doSignUp(name, email, pass);
-//                    signupUser(name, email, pass);
                 } else {
                     Log.d(TAG, "onClick: validation incomplete");
                     progressBar.setVisibility(View.GONE);

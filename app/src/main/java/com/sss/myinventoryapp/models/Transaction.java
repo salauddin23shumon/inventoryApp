@@ -7,15 +7,16 @@ public class Transaction {
     private String productName;
     private int quantity;
     private String date;
-    private String comment;
+    private double rate;
 
-    public Transaction(String tid, String type, String productName, int quantity, String date, String comment) {
+
+    public Transaction(String tid, String type, String productName, int quantity, String date, double rate) {
         this.tid = tid;
         this.type = type;
         this.productName = productName;
         this.quantity = quantity;
         this.date = date;
-        this.comment = comment;
+        this.rate = rate;
     }
 
     public Transaction() {
@@ -62,11 +63,11 @@ public class Transaction {
         this.date = date;
     }
 
-    public String getComment() {
-        return comment;
+    public double getRate() {
+        return rate;
     }
 
-    public void setComment(String comment) {
-        this.comment = comment;
+    public void setRate(double rate) {
+        this.rate = rate;
     }
 }

@@ -7,13 +7,16 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.sss.myinventoryapp.ui.home.HomeFragment"
+        android:name="com.sss.myinventoryapp.fragments.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" >
 
         <action
             android:id="@+id/action_nav_home_to_productAddFragment"
             app:destination="@id/productAddFragment" />
+        <action
+            android:id="@+id/action_nav_home_to_transactionAddFragment"
+            app:destination="@id/transactionAddFragment" />
     </fragment>
 
     <fragment
@@ -100,13 +103,25 @@
         app:destination="@id/nav_signin"
         app:popUpTo="@+id/nav_graph"
         app:launchSingleTop="true"/>
+
     <fragment
         android:id="@+id/productAddFragment"
         android:name="com.sss.myinventoryapp.fragments.ProductAddFragment"
-        android:label="fragment_product_add"
-        tools:layout="@layout/fragment_product_add" />
+        android:label="Add Product"
+        tools:layout="@layout/fragment_product_add" >
+        <action
+            android:id="@+id/action_productAddFragment_to_nav_home"
+            app:destination="@id/nav_home" />
+    </fragment>
+
     <fragment
         android:id="@+id/transactionAddFragment"
         android:name="com.sss.myinventoryapp.fragments.TransactionAddFragment"
         android:label="TransactionAddFragment" />
+
+    <fragment
+        android:id="@+id/nav_transaction"
+        android:name="com.sss.myinventoryapp.fragments.TransactionListFragment"
+        android:label="fragment_transaction_list"
+        tools:layout="@layout/fragment_transaction_list" />
 </navigation>

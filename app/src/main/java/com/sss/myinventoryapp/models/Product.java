@@ -1,6 +1,8 @@
 package com.sss.myinventoryapp.models;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private String pid;
     private String productName;
     private double rate;
@@ -8,17 +10,20 @@ public class Product {
     private String unit;
     private double price;
     private int stock;
+    private String imgUrl;
     private String entryDate;
 
-    public Product(String pid, String productName, double rate, int quantity, String unit, double price, String entryDate) {
-        this.pid=pid;
+
+    public Product(String pid, String productName, double rate, int quantity, String unit, double price, String entryDate, String imgUrl) {
+        this.pid = pid;
         this.productName = productName;
         this.rate = rate;
         this.quantity = quantity;
-        this.stock=quantity;
+        this.stock = quantity;
         this.unit = unit;
         this.price = price;
         this.entryDate = entryDate;
+        this.imgUrl= imgUrl;
     }
 
     public Product() {
@@ -78,6 +83,14 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getImgUrl() {
+        return imgUrl;
+    }
+
+    public void setImgUrl(String imgUrl) {
+        this.imgUrl = imgUrl;
     }
 
     public String getEntryDate() {

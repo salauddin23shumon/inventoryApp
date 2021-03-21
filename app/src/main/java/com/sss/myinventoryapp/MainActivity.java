@@ -158,6 +158,11 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
                     navController.navigate(R.id.action_global_nav_signin);
                     if (requestingLocationUpdates(this))
                         locationService.removeLocationUpdates();
+
+                    Intent intent = getIntent();
+                    finish();
+                    startActivity(intent);
+
                     Log.e(TAG, "onLogout: called");
                 } else
                     Log.e(TAG, "onLogout: user=null");

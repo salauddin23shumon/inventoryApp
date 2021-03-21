@@ -3,90 +3,138 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context=".fragments.ProductAddFragment"
-    android:layout_marginTop="80dp">
+    tools:context=".fragments.TransactionAddFragment">
 
-    <EditText
-        android:id="@+id/nameET"
+    <TextView
+        android:id="@+id/typeTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Product In"
+        android:textSize="40sp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="40dp"
+        android:layout_marginTop="40dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="name"
-        android:inputType="text" />
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_margin="10dp">
 
-    <EditText
-        android:id="@+id/quantityTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="quantity"
-        android:inputType="text" />
+        <TextView
+            android:id="@+id/nameTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Product Name: pepsi"/>
 
-    <EditText
-        android:id="@+id/unitTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="unit"
-        android:inputType="text" />
+        <TextView
+            android:id="@+id/idTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Product SKU: 12345646798"/>
 
-    <EditText
-        android:id="@+id/rateTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="rate"
-        android:inputType="text" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-    <EditText
-        android:id="@+id/priceTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="price"
-        android:inputType="text" />
+            <TextView
+                android:id="@+id/unitTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="unit: 1ltr"
+                android:textSize="18sp"
+                android:layout_weight="1" />
 
-    <EditText
-        android:id="@+id/dateTV"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="date"
-        android:inputType="text" />
+            <TextView
+                android:id="@+id/rateTV"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Rate: 48.00"
+                android:textSize="18sp" />
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="" />
+        </LinearLayout>
 
-    <EditText
-        android:id="@+id/quantityET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="quantity"
-        android:inputType="text" />
+        <TextView
+            android:id="@+id/quantityTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:text="Quantity: 100" />
 
-    <EditText
-        android:id="@+id/rateET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="rate"
-        android:inputType="text" />
 
-    <EditText
-        android:id="@+id/priceET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="price"
-        android:inputType="text" />
 
-    <EditText
-        android:id="@+id/dateET"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="date"
-        android:inputType="text" />
+        <TextView
+            android:id="@+id/priceTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Price: 50.00"
+            android:textSize="18sp"/>
 
-    <Button
-        android:id="@+id/saveBtn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="save" />
+        <TextView
+            android:id="@+id/dateTV"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Entry Date:"
+            android:textSize="18sp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/editBtn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="12dp"
+            android:text="Update"
+            android:layout_marginTop="40dp"
+            app:cornerRadius="20dp" />
+
+    </LinearLayout>
+
+
+
+<!--    <Button-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/quantityET"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="quantity"-->
+<!--        android:inputType="text" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/rateET"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="rate"-->
+<!--        android:inputType="text" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/priceET"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="price"-->
+<!--        android:inputType="text" />-->
+
+<!--    <EditText-->
+<!--        android:id="@+id/dateET"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="date"-->
+<!--        android:inputType="text" />-->
+
+<!--    <Button-->
+<!--        android:id="@+id/saveBtn"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="save" />-->
 
 
 </LinearLayout>

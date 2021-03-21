@@ -116,7 +116,7 @@
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/signinBtn"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:padding="12dp"
                     android:text="@string/signin"
                     app:cornerRadius="20dp" />
