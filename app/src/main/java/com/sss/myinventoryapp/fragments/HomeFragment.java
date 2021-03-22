@@ -250,7 +250,7 @@ public class HomeFragment extends Fragment implements ProductAdapter.Transaction
 
                 if (type.equals("In")) {
                     q = product.getQuantity() + Integer.parseInt(quantity);
-                    s = product.getQuantity() + Integer.parseInt(quantity);
+                    s = product.getStock() + Integer.parseInt(quantity);
                     product.setQuantity(q);
                     product.setStock(s);
                     product.setRate(Double.parseDouble(rate));
