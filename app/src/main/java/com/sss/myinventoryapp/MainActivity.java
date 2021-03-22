@@ -4,9 +4,13 @@ import android.Manifest;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.ServiceConnection;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.location.LocationManager;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
@@ -14,15 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Menu;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.sss.myinventoryapp.interfaces.ChangeHomeNavListener;
+import com.sss.myinventoryapp.interfaces.ConnectivityChangeListener;
 import com.sss.myinventoryapp.interfaces.LocationServiceListener;
 import com.sss.myinventoryapp.services.LocationUpdatesService;
+import com.sss.myinventoryapp.utility.ConnectivityChangeReceiver;
+import com.sss.myinventoryapp.utility.EventBusData;
 import com.sss.myinventoryapp.utility.SessionManager;
-import com.sss.myinventoryapp.utility.Utils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -37,12 +42,18 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import org.greenrobot.eventbus.EventBus;
+
 import static com.sss.myinventoryapp.utility.Constant.FILE_NAME;
 import static com.sss.myinventoryapp.utility.Constant.IS_SERVICE_ACTIVE;
+import static com.sss.myinventoryapp.utility.Constant.LOCATION_DISABLE;
+import static com.sss.myinventoryapp.utility.Constant.LOCATION_ENABLE;
+import static com.sss.myinventoryapp.utility.Constant.NETWORK_AVAILABLE;
+import static com.sss.myinventoryapp.utility.Constant.NETWORK_NOT_AVAILABLE;
 import static com.sss.myinventoryapp.utility.Utils.requestingLocationUpdates;
 
 public class MainActivity extends AppCompatActivity implements ChangeHomeNavListener,
-        LocationServiceListener, NavController.OnDestinationChangedListener {
+        LocationServiceListener, NavController.OnDestinationChangedListener, ConnectivityChangeListener {
 
     private static final String TAG = "MainActivity";
     private Menu menu;
@@ -52,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private AppBarConfiguration appBarConfiguration;
+    private Snackbar snackbar;
 
     // Used in checking for runtime permissions.
     private static final int REQUEST_LOCATION_PERMISSIONS_CODE = 34;
@@ -81,12 +93,22 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
     private SharedPreferences.Editor editor;
     private SessionManager sessionManager;
 
+    private ConnectivityChangeReceiver connectivityChangeReceiver;
+    private IntentFilter intentFilter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+        snackbar = Snackbar.make(findViewById(android.R.id.content), "" , Snackbar.LENGTH_INDEFINITE);
+        connectivityChangeReceiver = new ConnectivityChangeReceiver();
+        intentFilter = new IntentFilter();
+        intentFilter.addAction(ConnectivityManager.CONNECTIVITY_ACTION);
+        intentFilter.addAction(LocationManager.PROVIDERS_CHANGED_ACTION);
+
+        registerReceiver(connectivityChangeReceiver, intentFilter);
 
         sharedPreferences = this.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
@@ -124,6 +146,12 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
             isBound = false;
         }
         super.onStop();
+    }
+
+    @Override
+    protected void onDestroy() {
+        unregisterReceiver(connectivityChangeReceiver);
+        super.onDestroy();
     }
 
     @Override
@@ -195,7 +223,7 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
             navGraph.setStartDestination(fragmentId);
             navController.setGraph(navGraph);
 
-            appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home,R.id.nav_gallery,R.id.nav_slideshow)
+            appBarConfiguration = new AppBarConfiguration.Builder(R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
                     .setOpenableLayout(drawer)
                     .build();
             NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
@@ -291,5 +319,37 @@ public class MainActivity extends AppCompatActivity implements ChangeHomeNavList
                 toolbar.setVisibility(View.GONE);
                 break;
         }
+    }
+
+    @Override
+    public void onStatusChange(boolean value, int statusType) {
+        switch (statusType) {
+            case LOCATION_ENABLE:
+                if (snackbar.isShown())
+                    snackbar.dismiss();
+                break;
+            case LOCATION_DISABLE:
+                showSnackbar("location is disabled");
+                if (locationService.serviceIsRunningInForeground(this)) {
+                    Log.e(TAG, "location terminated forcefully: ");
+                    locationService.removeLocationUpdates();
+                }
+                break;
+            case NETWORK_AVAILABLE:
+                if (snackbar.isShown())
+                    snackbar.dismiss();
+                EventBus.getDefault().postSticky(new EventBusData(true));
+                break;
+            case NETWORK_NOT_AVAILABLE:
+                showSnackbar("No internet available");
+                EventBus.getDefault().postSticky(new EventBusData(false));
+                break;
+        }
+    }
+
+    public void showSnackbar(String msg) {
+        snackbar = Snackbar.make(findViewById(android.R.id.content), "" + msg, Snackbar.LENGTH_INDEFINITE);
+        snackbar.setTextColor(Color.RED);
+        snackbar.show();
     }
 }

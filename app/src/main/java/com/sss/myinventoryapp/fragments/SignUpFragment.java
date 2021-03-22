@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,7 @@ public class SignUpFragment extends Fragment {
 
     private AwesomeValidation mAwesomeValidation;
     private Context context;
+    private TextView signinTV;
     private FirebaseAuth firebaseAuth;
     private TextInputEditText nameET, emailET, passET;
     private TextInputLayout nameTIL, emailTIL, passTIL;
@@ -76,9 +78,17 @@ public class SignUpFragment extends Fragment {
         emailTIL = view.findViewById(R.id.emailWrapper);
         passTIL = view.findViewById(R.id.passwordWrapper);
         btnSignup = view.findViewById(R.id.signupBtn);
+        signinTV = view.findViewById(R.id.signinTV);
         progressBar = view.findViewById(R.id.progress_signup);
 
         navController = Navigation.findNavController(view);
+
+        signinTV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                navController.navigate(R.id.action_signUpFragment_to_signInFragment);
+            }
+        });
 
         signUpViewModel = new ViewModelProvider(this).get(SignUpViewModel.class);
 

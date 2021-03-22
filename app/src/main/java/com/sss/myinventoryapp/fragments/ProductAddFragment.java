@@ -18,6 +18,7 @@ import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
 import android.util.Log;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.basgeekball.awesomevalidation.AwesomeValidation;
+import com.basgeekball.awesomevalidation.utility.RegexTemplate;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -43,14 +46,21 @@ import com.sss.myinventoryapp.R;
 import com.sss.myinventoryapp.models.Product;
 import com.sss.myinventoryapp.models.User;
 import com.sss.myinventoryapp.responces.ProductResponse;
+import com.sss.myinventoryapp.utility.EventBusData;
 import com.sss.myinventoryapp.utility.SessionManager;
 import com.sss.myinventoryapp.viewmodels.ProductViewModel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
+import static com.basgeekball.awesomevalidation.ValidationStyle.BASIC;
+import static com.basgeekball.awesomevalidation.ValidationStyle.TEXT_INPUT_LAYOUT;
 import static com.sss.myinventoryapp.utility.Utility.getImageBAOS;
 
 
@@ -68,6 +78,8 @@ public class ProductAddFragment extends Fragment {
     private StorageReference imgStorageRef;
     private StorageTask storageTask;
     private NavController navController;
+    private AwesomeValidation mAwesomeValidation;
+    private EventBus bus = EventBus.getDefault();
 
     private Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener startingDate =
@@ -93,8 +105,8 @@ public class ProductAddFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        this.context=context;
-        manager=new SessionManager(context);
+        this.context = context;
+        manager = new SessionManager(context);
     }
 
     @Override
@@ -120,7 +132,11 @@ public class ProductAddFragment extends Fragment {
         picBtn = view.findViewById(R.id.picBtn);
         imageView = view.findViewById(R.id.picIV);
 
-        navController= Navigation.findNavController(view);
+        mAwesomeValidation = new AwesomeValidation(BASIC);
+//        mAwesomeValidation.setTextInputLayoutErrorTextAppearance(R.style.TextInputLayoutErrorStyle);
+        addValidationForTextInputLayout();
+
+        navController = Navigation.findNavController(view);
 
 //        productViewModel.getProductLiveData().observe(getViewLifecycleOwner(), new Observer<ProductResponse>() {
 //            @Override
@@ -168,8 +184,16 @@ public class ProductAddFragment extends Fragment {
                 String date = dateET.getText().toString();
 
 
-                Product product = new Product(null, name, Double.parseDouble(rate), Integer.parseInt(quantity),unit, Double.parseDouble(price), null,date);
-                saveProduct(product);
+                if (filePath!=null) {
+
+                    if (mAwesomeValidation.validate()) {
+                        Product product = new Product(null, name, Double.parseDouble(rate), Integer.parseInt(quantity), unit, Double.parseDouble(price), null, date);
+                        saveProduct(product);
+                    } else
+                        Log.d(TAG, "onClick: validation err");
+                }else {
+                    Toast.makeText(context, "select product image", Toast.LENGTH_SHORT).show();
+                }
 
 
 //                Product product = new Product("", name, Double.parseDouble(rate), Integer.parseInt(quantity),unit, Double.parseDouble(price), date);
@@ -227,7 +251,7 @@ public class ProductAddFragment extends Fragment {
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
                                     public void onFailure(@NonNull Exception e) {
-                                        Log.e(TAG, "onFailure: "+e.getMessage());
+                                        Log.e(TAG, "onFailure: " + e.getMessage());
                                     }
                                 });
                             }
@@ -239,5 +263,40 @@ public class ProductAddFragment extends Fragment {
                         Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
+    }
+
+    private void addValidationForTextInputLayout() {
+
+        mAwesomeValidation.addValidation(nameET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+        mAwesomeValidation.addValidation(quantityET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+        mAwesomeValidation.addValidation(dateET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+        mAwesomeValidation.addValidation(rateET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+        mAwesomeValidation.addValidation(priceET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+        mAwesomeValidation.addValidation(unitET, RegexTemplate.NOT_EMPTY, "field can  not be empty");
+
+    }
+
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
+    public void onEvent(EventBusData data) {
+        Log.d(TAG, "onEvent: " + data.isNetworkAvailable());
+        if (!data.isNetworkAvailable())
+            saveBtn.setEnabled(false);
+        else
+            saveBtn.setEnabled(true);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!bus.isRegistered(this)){
+            bus.register(this);
+        }
+    }
+
+    @Override
+    public void onStop() {
+        if (bus.isRegistered(this))
+            bus.unregister(this);
+        super.onStop();
     }
 }

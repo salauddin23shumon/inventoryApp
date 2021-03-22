@@ -8,7 +8,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import com.sss.myinventoryapp.interfaces.ConnectivityListener;
+import com.sss.myinventoryapp.interfaces.ConnectivityChangeListener;
 
 import static com.sss.myinventoryapp.utility.Constant.LOCATION_DISABLE;
 import static com.sss.myinventoryapp.utility.Constant.LOCATION_ENABLE;
@@ -34,10 +34,10 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
                     if (isGpsEnabled) {
                         Log.e(TAG, "gps on");
-                        ((ConnectivityListener) context).onStatusChange(true, LOCATION_ENABLE);
+                        ((ConnectivityChangeListener) context).onStatusChange(true, LOCATION_ENABLE);
                     } else {
                         Log.e(TAG, "gps off");
-                        ((ConnectivityListener) context).onStatusChange(false, LOCATION_DISABLE);
+                        ((ConnectivityChangeListener) context).onStatusChange(false, LOCATION_DISABLE);
                     }
                     break;
 
@@ -51,10 +51,10 @@ public class ConnectivityChangeReceiver extends BroadcastReceiver {
 
                     if (isNetworkAvailable) {
                         Log.e(TAG, "Network Available");
-                        ((ConnectivityListener) context).onStatusChange(true, NETWORK_AVAILABLE);
+                        ((ConnectivityChangeListener) context).onStatusChange(true, NETWORK_AVAILABLE);
                     } else {
                         Log.e(TAG, "Network Not Available");
-                        ((ConnectivityListener) context).onStatusChange(false, NETWORK_NOT_AVAILABLE);
+                        ((ConnectivityChangeListener) context).onStatusChange(false, NETWORK_NOT_AVAILABLE);
                     }
                     break;
             }
