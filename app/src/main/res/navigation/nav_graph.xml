@@ -111,6 +111,8 @@
         tools:layout="@layout/fragment_product_add" >
         <action
             android:id="@+id/action_productAddFragment_to_nav_home"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/productAddFragment"
             app:destination="@id/nav_home" />
     </fragment>
 

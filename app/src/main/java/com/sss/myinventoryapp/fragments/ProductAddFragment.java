@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 
+import android.text.format.DateFormat;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.LayoutInflater;
@@ -56,6 +57,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import static android.app.Activity.RESULT_OK;
@@ -80,6 +82,8 @@ public class ProductAddFragment extends Fragment {
     private NavController navController;
     private AwesomeValidation mAwesomeValidation;
     private EventBus bus = EventBus.getDefault();
+    StorageReference fileReference;
+    private int count=0;
 
     private Calendar myCalendar = Calendar.getInstance();
     private DatePickerDialog.OnDateSetListener startingDate =
@@ -228,7 +232,11 @@ public class ProductAddFragment extends Fragment {
     }
 
     private void saveProduct(Product product) {
-        final StorageReference fileReference = imgStorageRef.child("product_img_" + product.getEntryDate());
+
+        Date d = new Date();
+        CharSequence s  = DateFormat.format("dd-mm-yyyy", d.getTime());
+
+        fileReference = imgStorageRef.child("product_img_" +System.currentTimeMillis());
         storageTask = fileReference.putBytes(imgByte)
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
@@ -246,7 +254,12 @@ public class ProductAddFragment extends Fragment {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                         Log.e(TAG, "onSuccess: ");
-                                        navController.navigate(R.id.action_productAddFragment_to_nav_home);
+                                        try {
+                                            navController.popBackStack();
+                                        } catch(Exception e) {
+                                            Log.d(TAG, "onSuccess: "+e.getMessage());
+                                        }
+
                                     }
                                 }).addOnFailureListener(new OnFailureListener() {
                                     @Override
